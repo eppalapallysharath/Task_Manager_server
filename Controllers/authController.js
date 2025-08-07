@@ -1,5 +1,6 @@
 const bcryptjs = require("bcryptjs");
 const { UserModel } = require("../Models/authModel.js");
+const { generateToken } = require("../Utils/token.js");
 
 const signupController = async (req, res, next) => {
   try {
@@ -13,15 +14,36 @@ const signupController = async (req, res, next) => {
     });
     res.json(user);
   } catch (error) {
-    console.log(error);
-    res.status(400).send("something went wrong");
-    // const
-    // next (error)
+    const err = { statusCode: 400, message: error.message };
+    next(err);
   }
 };
 
-const loginController = (req, res) => {
-  res.send("login api");
+const loginController = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const findUser = await UserModel.findOne({ email: email });
+    const decryptPassword = await bcryptjs.compare(password, findUser.password);
+    if (decryptPassword) {
+      const token = await generateToken(findUser);
+      const user = await UserModel.findById(findUser._id).select([
+        "-password",
+        "-__v",
+        "-createdAt",
+        "-updatedAt",
+      ]);
+      console.log(user);
+      return res
+        .status(200)
+        .json({ message: "Login successfully", user, token });
+    } else {
+      return res.status(429).json({ message: "invalid email/password" });
+    }
+  } catch (error) {
+    const err = { statusCode: 400, message: error.message };
+    next(err);
+  }
 };
 
 module.exports = { signupController, loginController };

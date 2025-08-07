@@ -4,8 +4,11 @@ const {
   loginController,
   signupController,
 } = require("../Controllers/authController.js");
-const { signupValidator } = require("../Validators/authValidators.js");
+const {
+  signupValidator,
+  loginValidator,
+} = require("../Validators/authValidators.js");
 Router.post("/signup", signupValidator, signupController);
-Router.post("/login", loginController);
+Router.post("/login", loginValidator, loginController);
 
 module.exports = Router;
