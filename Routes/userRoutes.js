@@ -7,6 +7,7 @@ const {
   validateMiddleware,
 } = require("../Validators/authValidators.js");
 const { checkAuth } = require("../Middlewares/authMiddleware.js");
+const { upload } = require("../Utils/multerFileUpload.js");
 Router.get(
   "/profile",
   tokenValidator,
@@ -19,6 +20,8 @@ Router.put(
   tokenValidator,
   editProfileValidator,
   validateMiddleware,
+  checkAuth,
+  upload.single("profilePic"),
   editProfile
 );
 

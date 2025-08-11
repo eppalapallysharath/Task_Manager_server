@@ -12,6 +12,7 @@ const authSchema = new mongoose.Schema(
       default: "employee",
     },
     password: { type: String, required: true },
+    profilePic: { type: String },
   },
   { timestamps: true }
 );
