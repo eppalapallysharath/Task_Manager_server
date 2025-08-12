@@ -28,20 +28,20 @@ Router.put(
   checkRole("employee"),
   updateTicketStatusById
 );
-Router.post(
-  "/addCommentToTicket/:ticketID",
-  tokenValidator,
-  validateMiddleware,
-  checkAuth,
-  checkRole("employee"),
-  addCommentToTicketById
-);
-Router.get(
-  "/viewCommentsTicket/:ticketID",
-  tokenValidator,
-  validateMiddleware,
-  checkAuth,
-  checkRole("employee"),
-  viewCommentsTicketById
-);
+// Router.post(
+//   "/addCommentToTicket/:ticketID",
+//   tokenValidator,
+//   validateMiddleware,
+//   checkAuth,
+//   checkRole("employee"),
+//   addCommentToTicketById
+// );
+// Router.get(
+//   "/viewCommentsTicket/:ticketID",
+//   tokenValidator,
+//   validateMiddleware,
+//   checkAuth,
+//   checkRole("employee"),
+//   viewCommentsTicketById
+// );
 module.exports = Router;
