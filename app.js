@@ -7,7 +7,14 @@ const userRoutes = require("./Routes/userRoutes.js");
 const { errorHandler } = require("./Middlewares/errorMiddleware.js");
 const managerRoutes = require("./Routes/managerRoutes.js");
 const employeeRoutes = require("./Routes/employeRoutes.js");
+const cors = require("cors");
 connectDatabase();
+
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded(true));
